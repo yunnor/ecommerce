@@ -297,11 +297,11 @@ $app->get("/admin/categories/:idcategory", function($idcategory){
 $app->post("/admin/categories/:idcategory", function($idcategory){
 
 	User::verifyLogin();
-	
+
 	$category = new Category();
 
 	$category->get((int)$idcategory);
-	
+
 	$category->setData($_POST);
 
 	$category->save();
@@ -311,6 +311,21 @@ $app->post("/admin/categories/:idcategory", function($idcategory){
 
 });
 
+$app->get("/categories/:idcategory", function($idcategory){
+
+	$category = new Category();
+
+	$category->get((int)$idcategory);
+
+	$page = new Page();
+
+	$page->setTpl("category", [
+		'category'=>$category->getValues(),
+		'products'=>[]
+	]);
+
+});
+
 $app->run();
 
- ?>
+?>
